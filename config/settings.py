@@ -40,7 +40,8 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    "django_countries"
+    "django_countries",
+    "django_seed",
 ]
 
 PROJECT_APPS = [
@@ -70,7 +71,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -143,3 +144,14 @@ AUTH_USER_MODEL = "users.User"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
+
+# Email Configuration
+
+EMAIL_HOST = "smtp.yandex.ru"
+EMAIL_PORT = 465
+EMAIL_HOST_USER = os.environ.get("MAIL_USERNAME")
+EMAIL_HOST_PASSWORD = os.environ.get("MAIL_PASSWORD")
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_FROM = EMAIL_HOST_USER
+

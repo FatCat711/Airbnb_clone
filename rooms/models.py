@@ -1,6 +1,6 @@
 from django.db import models
-
 from django_countries.fields import CountryField
+from django.urls import reverse
 
 from core import models as core_models
 from users import models as user_model
@@ -55,7 +55,7 @@ class Photo(core_models.TimeStampedModel):
     """Photo model Definition"""
 
     caption = models.CharField(max_length=80)
-    file = models.ImageField(upload_to=room_photo_directory_path)
+    file = models.ImageField(upload_to="rooms_photos")
     room = models.ForeignKey("Room", on_delete=models.CASCADE, related_name="photos")
 
     def __str__(self):
@@ -95,6 +95,11 @@ class Room(core_models.TimeStampedModel):
     def total_rating(self):
         all_reviews = self.reviews.all()
         all_ratings = 0
-        for review in all_reviews:
-            all_ratings += review.rating_avg()
-        return round(all_ratings/len(all_reviews), 2)
+        if len(all_reviews) > 0:
+            for review in all_reviews:
+                all_ratings += review.rating_avg()
+            return round(all_ratings/len(all_reviews), 2)
+        return 0
+
+    def get_absolute_url(self):
+        return reverse("rooms:detail", kwargs={"pk": self.pk})
