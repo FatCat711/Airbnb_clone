@@ -1,4 +1,5 @@
 from math import ceil
+from typing import Any, Dict
 from django.http import HttpRequest, HttpResponse, Http404
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, EmptyPage
@@ -31,7 +32,7 @@ class HomeView(ListView):
     """Home View Definition"""
 
     model = room_models.Room
-    paginate_by = 10
+    paginate_by = 12
     paginate_orphans = 5
     page_kwarg = "page"
     ordering = "created"
