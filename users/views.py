@@ -3,7 +3,7 @@ import requests
 
 from django.shortcuts import render, redirect, reverse
 from django.urls import reverse_lazy
-from django.views.generic import FormView
+from django.views.generic import FormView, DetailView
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -36,9 +36,9 @@ class LoginView(FormView):
     template_name = "users/login.html"
     form_class = forms.LoginForm
     success_url = reverse_lazy("core:home")
-    initial = {
-        "email": "sheparov.71@mail.ru",
-    }
+    # initial = {
+    #     "email": "sheparov.71@mail.ru",
+    # }
 
     def form_valid(self, form):
         email = form.cleaned_data.get("email")
@@ -53,11 +53,11 @@ class SignUpView(FormView):
     template_name = "users/signup.html"
     form_class = forms.SignUpForm
     success_url = reverse_lazy("core:home")
-    initial = {
-        "first_name": "Ilya",
-        "last_name": "Sheparov",
-        "email": "sheparov.71@mail.ru",
-    }
+    # initial = {
+    #     "first_name": "Ilya",
+    #     "last_name": "Sheparov",
+    #     "email": "sheparov.71@mail.ru",
+    # }
 
     def form_valid(self, form):
         form.save()
@@ -156,3 +156,8 @@ def github_callback(request):
     except GithubException as e:
         messages.error(request, e)
         return redirect(reverse("users:login"))
+
+
+class UserProfileView(DetailView):
+    model = models.User
+    context_object_name = "user_obj"

@@ -11,4 +11,5 @@ urlpatterns = [
     path("sigup/", views.SignUpView.as_view(), name="signup"),
     path("verify/<str:key>", views.complete_verification, name="verification"),
     path("verify/<str:key>", views.complete_verification, name="verification"),
+    path("profile/<int:pk>", views.UserProfileView.as_view(), name="profile"),
 ]
