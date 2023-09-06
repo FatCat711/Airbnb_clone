@@ -27,3 +27,45 @@ class SearchForm(forms.Form):
                                                 widget=forms.CheckboxSelectMultiple,
                                                 required=False,
                                                 )
+
+
+class CreatePhoto(forms.ModelForm):
+    class Meta:
+        model = models.Photo
+        fields = [
+            "caption",
+            "file",
+        ]
+
+    def save(self, pk, *args, **kwargs):
+        photo = super().save(commit=False)
+        photo.room = models.Room.objects.get(pk=pk)
+        photo.save()
+
+
+class CreateRoomForm(forms.ModelForm):
+    class Meta:
+        model = models.Room
+        fields = [
+            "name",
+            "description",
+            "country",
+            "city",
+            "price",
+            "address",
+            "beds",
+            "bedrooms",
+            "baths",
+            "guests",
+            "instant_book",
+            "room_type",
+            "amenities",
+            "facilities",
+            "house_rules",
+            "check_in",
+            "check_out",
+        ]
+
+    def save(self, *args, **kwargs):
+        room = super().save(commit=False)
+        return room
