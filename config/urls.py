@@ -26,6 +26,10 @@ urlpatterns = [
     path("", include("core.urls", namespace="core")),
     path("users/", include("users.urls", namespace="users")),
     path("rooms/", include("rooms.urls", namespace="rooms")),
+    path("reservations/", include("reservations.urls", namespace="reservations")),
+    path("reviews/", include("reviews.urls", namespace="reviews")),
+    path("lists/", include("lists.urls", namespace="lists")),
+    path("conversations/", include("conversations.urls", namespace="conversations")),
 ]
 
 mimetypes.add_type("application/javascript", ".js", True)

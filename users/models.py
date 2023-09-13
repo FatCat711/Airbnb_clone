@@ -7,6 +7,8 @@ from django.utils.html import strip_tags
 import uuid
 from django.template.loader import render_to_string
 
+from core import managers as core_managers
+
 
 def user_avatar_directory_path(instance: "User", filename: str) -> str:
     return f"users/user_{instance.id}/avatar/{filename}"
@@ -59,6 +61,7 @@ class User(AbstractUser):
     email_verify = models.BooleanField(default=False)
     email_secret = models.CharField(max_length=120, default="", blank=True)
     login_method = models.CharField(max_length=50, choices=LOGIN_CHOICES, default=LOGIN_EMAIL)
+    objects = core_managers.CustomUserManager()
 
     def verify_email(self):
         if self.email_verify is False:
